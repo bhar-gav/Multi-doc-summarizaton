@@ -40,8 +40,9 @@ for line in sys.stdin:
     fl.write('%d\n' % (li+1))
 fd.close()
 fl.close()
-print '%s: %d lines processed' % (sys.argv[0],i)
-print '%s: %d unique labels' % (sys.argv[0],len(labels))
+
+print('%s: %d lines processed' % (sys.argv[0], i))#+
+print ('%s: %d unique labels' % (sys.argv[0],len(labels)))
 def srtfun(a,b):
     if labels[a] < labels[b]: return -1
     elif labels[a] > labels[b]: return 1
