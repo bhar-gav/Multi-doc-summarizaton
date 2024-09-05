@@ -2,5 +2,5 @@ git-help.txt
 test/
 results/input-graph/network.svg
 
-evaluation/validate.py
+model/evaluation/validate.py
 
