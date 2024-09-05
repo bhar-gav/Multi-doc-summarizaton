@@ -9,9 +9,15 @@ import logging
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+<<<<<<< HEAD
 # Download NLTK data files (if not already downloaded)
 nltk.download('punkt')
 nltk.download('stopwords')
+=======
+# # Download NLTK data files (if not already downloaded)
+# nltk.download('punkt')
+# nltk.download('stopwords')
+>>>>>>> be228c1d0 (update)
 
 # Initialize the stemmer and stop words list
 stemmer = PorterStemmer()
