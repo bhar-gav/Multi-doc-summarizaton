@@ -117,8 +117,28 @@ def main():
     batch_size = 32
     num_epochs = 5
 
-    # Load the vocabulary (you need to provide or build this)
-    vocab = {}  # Replace with your vocabulary loading mechanism
+    
+    vocab_file_path = os.path.join(os.path.dirname(__file__), '..','vocab','vocab.pkl')
+
+
+    try:
+        with open(vocab_file_path, 'rb') as f:
+            vocab = pickle.load(f)
+        print("File loaded successfully.")
+    except FileNotFoundError:
+        print("The file was not found.")
+    except pickle.UnpicklingError:
+        print("Error unpickling the file. The file may be corrupted or not a valid pickle file.")
+    except EOFError:
+        print("Reached end of file unexpectedly. The file might be incomplete.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+
+    # Print some information about the loaded vocabulary
+    print("Vocabulary loaded.")
+    print("Vocabulary size:", len(vocab))
+    # print("Sample of vocabulary:", list(vocab.items())[:1])  # Print a sample of the vocabulary
 
     # Prepare dataset and dataloader
     data_path = os.path.join(os.path.dirname(__file__), '..', '..', 'preprocessed_data')
