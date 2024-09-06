@@ -2,9 +2,8 @@
 
 ### read before copying this repository
 
-> implementations:
+> model implementation dir:
 ```
 model/
-# step1 :
-# step2 :
+
 ```
