@@ -31,7 +31,7 @@ def read_documents_from_directory(directory_path):
     return documents, filenames
 
 # Define the root directory containing documents
-directory_path = '/home/bhargav/Desktop/Bhargav/projects/Major_Project/Multi-doc-summarization/preprocessed_data/duc2004_tasks1and2_docs'
+directory_path = os.path.join(os.path.dirname(__file__), '..', '..','preprocessed_data','duc2004_tasks1and2_docs')
  
 
 # Read all documents
