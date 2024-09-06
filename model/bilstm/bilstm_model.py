@@ -63,26 +63,32 @@ class TextSummarizationDataset(Dataset):
         if len(self.data) == 0:
             raise ValueError("Dataset is empty. Please check the data files.")
         
-    def load_data(self):
-        texts = []
-        labels = []
-        for root, _, files in os.walk(self.data_path):
-            print(f"Checking directory: {root}, Files: {files}")
-            for file_name in files:
-                file_path = os.path.join(root, file_name)
-                print(f"Reading file: {file_path}")
+def load_data(self):
+    texts = []
+    labels = []
+    for root, _, files in os.walk(self.data_path):
+        print(f"Checking directory: {root}, Files: {files}")
+        for file_name in files:
+            file_path = os.path.join(root, file_name)
+            print(f"Reading file: {file_path}")
+            try:
                 with open(file_path, 'r') as file:
                     lines = file.readlines()
                     for line in lines:
                         parts = line.strip().split('\t')
+                        print(f"Line parts: {parts}")  # Debugging line
                         if len(parts) >= 2:
                             text, label = parts[0], parts[1]
                             texts.append(text)
                             labels.append(label)
                         else:
                             print(f"Skipping malformed line: {line}")
-        print(f"Loaded {len(texts)} texts and {len(labels)} labels")
-        return list(zip(texts, labels))
+            except Exception as e:
+                print(f"Error reading file {file_path}: {e}")
+    
+    print(f"Loaded {len(texts)} texts and {len(labels)} labels")
+    return list(zip(texts, labels))
+
 
     def __len__(self):
         return len(self.data)
@@ -147,6 +153,7 @@ def main():
 
     # Prepare dataset and dataloader
     data_path = os.path.join(os.path.dirname(__file__), '..', '..', 'preprocessed_data')
+    print("Data Path:", data_path)
     dataset = TextSummarizationDataset(data_path, vocab, max_seq_length)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
