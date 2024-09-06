@@ -9,15 +9,9 @@ import logging
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-<<<<<<< HEAD
-# Download NLTK data files (if not already downloaded)
-nltk.download('punkt')
-nltk.download('stopwords')
-=======
 # # Download NLTK data files (if not already downloaded)
 # nltk.download('punkt')
 # nltk.download('stopwords')
->>>>>>> be228c1d0 (update)
 
 # Initialize the stemmer and stop words list
 stemmer = PorterStemmer()
@@ -83,8 +77,9 @@ def preprocess_dataset(dataset_folder, output_folder):
 
 
 # Define folder paths
-dataset_folder = '/home/bhargav/Desktop/Bhargav/projects/Major_Project/Multi-doc-summarization/datasets/DUC-2004-Dataset/DUC2004_Summarization_Documents/duc2004_testdata/tasks1and2'
-output_folder = '/home/bhargav/Desktop/Bhargav/projects/Major_Project/Multi-doc-summarization/preprocessed_data'
+
+dataset_folder = os.path.join(os.path.dirname(__file__), '..', '..','datasets','DUC-2004-Dataset','DUC2004_Summarization_Documents','duc2004_testdata','tasks1and2')
+output_folder = os.path.join(os.path.dirname(__file__), '..', '..','preprocessed_data')
 
 # Preprocess the entire dataset and save results
 preprocessed_documents = preprocess_dataset(dataset_folder, output_folder)
