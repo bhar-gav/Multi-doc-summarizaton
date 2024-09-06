@@ -2,7 +2,9 @@
 
 ### read before copying this repository
 
-> base executable path :
+> implementations:
 ```
-model/main.py
+model/
+# step1 :
+# step2 :
 ```
