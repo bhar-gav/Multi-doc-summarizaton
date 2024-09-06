@@ -7,12 +7,18 @@ from nltk.tokenize import word_tokenize
 
 
 class BiLSTMModel(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, hidden_dim, num_layers, num_classes, dropout=0.5):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, num_layers, num_classes, dropout=0.5, pretrained_embeddings=None, freeze_embeddings=False):
         super(BiLSTMModel, self).__init__()
         
         # Word Encoding Layer (Embedding Layer)
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         
+        # If pre-trained embeddings are provided, load them
+        if pretrained_embeddings is not None:
+            self.embedding.weight = nn.Parameter(pretrained_embeddings)
+            if freeze_embeddings:
+                self.embedding.weight.requires_grad = False  # Optionally freeze the embeddings
+
         # LSTM Layer
         self.lstm = nn.LSTM(input_size=embedding_dim,
                             hidden_size=hidden_dim,
@@ -28,24 +34,22 @@ class BiLSTMModel(nn.Module):
         self.dropout = nn.Dropout(dropout)
         
     def forward(self, x):
-        # Step 4.1: Word Encoding Layer
+        # Step 1: Word Encoding Layer
         x = self.embedding(x)
         
-        # Step 4.4: LSTM Layer
+        # Step 2: LSTM Layer
         lstm_out, (hn, cn) = self.lstm(x)
         
-        # Take the output from the last LSTM layer and apply dropout
+        # Step 3: Apply dropout to the output of the LSTM
         lstm_out = self.dropout(lstm_out)
         
-        # Aggregate LSTM output for the ranking layer
-        # Here we take the last hidden state of each sequence
+        # Step 4: Aggregate LSTM output for the ranking layer
         lstm_out = lstm_out[:, -1, :]  # [batch_size, hidden_dim * 2]
         
-        # Step 4.5: Output Layer
+        # Step 5: Output Layer
         out = self.fc(lstm_out)
         
         return out
-
 
 class TextSummarizationDataset(Dataset):
     def __init__(self, data_path, vocab, max_seq_length):
