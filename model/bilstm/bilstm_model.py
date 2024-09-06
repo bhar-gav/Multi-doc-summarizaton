@@ -5,6 +5,7 @@ import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 from nltk.tokenize import word_tokenize
 
+import pickle
 
 class BiLSTMModel(nn.Module):
     def __init__(self, vocab_size, embedding_dim, hidden_dim, num_layers, num_classes, dropout=0.5, pretrained_embeddings=None, freeze_embeddings=False):
@@ -122,7 +123,7 @@ def main():
     num_epochs = 5
 
     
-    vocab_file_path = os.path.join(os.path.dirname(__file__), '..','vocab','vocab.pkl')
+    vocab_file_path = os.path.join(os.path.dirname(__file__), 'vocab','vocab.pkl')
 
 
     try:
